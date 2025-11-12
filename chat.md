@@ -34,7 +34,7 @@ This formed the initial layout of our page. The code is pasted to CodePen for pr
 
 #### **Prompt 2**  
 **Prompt:**  
-<By referencing the screenshot file attached, create a prompt leading to a page with a suitable colour palette (dark blue as the overall colour tone) & visual design ideas (the layout should be clear and easy to follow)
+> By referencing the screenshot file attached, create a prompt leading to a page with a suitable colour palette (dark blue as the overall colour tone) & visual design ideas (the layout should be clear and easy to follow)
 
 **Response Summary:**  
 Gemini created a prompt that gives clear instructions on the details of the color palette and visual design.
@@ -80,7 +80,7 @@ These prompts are used to create appealing animation that has the following impa
 
 #### **Prompt 4**  
 **Prompt:**  
-< Based on the codes, identify potential bugs and refine the prompt to resolve the bugs. Additionally, make CareerVerse's interface more mobile-friendly for user convenience. 
+> Based on the codes, identify potential bugs and refine the prompt to resolve the bugs. Additionally, make CareerVerse's interface more mobile-friendly for user convenience. 
 
 **Response Summary:**  
 Grok created a prompt that not only preempts and eliminates bugs that may occur, but also includes features that can enhance clarity for mobile users. 
