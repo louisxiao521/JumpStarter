@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CareerVerse – Job Simulation Platform</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1A3E6C',
+            accent: '#3498DB',
+            success: '#28A745',
+            highlight: '#F39C12',
+            'light-bg': '#F8F9FA',
+            'text-dark': '#333333',
+            'text-muted': '#6C757D',
+            border: '#E0E0E0',
+            streak: '#FFD700',
+            'streak-bg': '#E0E0E0',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="bg-white text-text-dark font-sans antialiased">
+
+  <!-- 1. NAVIGATION -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 bg-primary text-white z-50 transition-shadow duration-300" style="box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <nav class="container mx-auto px-6 py-7 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-6 w-full md:w-auto">
+        <div class="nav-item logo flex items-center gap-3">
+          <!-- CareerVerse Logo SVG -->
+          <svg class="w-12 h-12" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 2L30.09 14.26L44 16.27L34 25.87L36.18 39.88L24 33.77L11.82 39.88L14 25.87L4 16.27L17.91 14.26L24 2Z" fill="white"/>
+            <path d="M24 10V20M18 14L24 20L30 14" stroke="#1A3E6C" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="24" cy="24" r="8" fill="#3498DB"/>
+            <path d="M20 24L23 27L28 21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="font-bold text-2xl hidden md:block">CareerVerse</span>
+        </div>
+        <div class="nav-item search-container relative flex-1 md:flex-initial">
+          <input type="text" placeholder="Search simulations..." class="search-input bg-white text-text-dark placeholder-text-muted rounded-full pl-11 pr-4 py-3 w-full md:w-64 focus:w-full md:focus:w-96 focus:outline-none focus:ring-4 focus:ring-accent/30 transition-all duration-350" />
+          <svg class="magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 w-6 h-6 text-text-muted transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </div>
+      </div>
+      <div class="flex items-center gap-6">
+        <button class="nav-item noti-btn relative p-2">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+          <span class="badge absolute -top-1 -right-1 bg-highlight text-white text-xs rounded-full w-6 h-6 flex items-center justify-center opacity-0 scale-0">0</span>
+        </button>
+        <button class="nav-item msg-btn relative p-2">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+          </svg>
+          <span class="badge absolute -top-1 -right-1 bg-highlight text-white text-xs rounded-full w-6 h-6 flex items-center justify-center opacity-0 scale-0">0</span>
+        </button>
+        <div class="nav-item user-menu flex items-center gap-3">
+          <img src="https://i.pravatar.cc/150?u=alexchen" alt="Alex Chen" class="w-10 h-10 rounded-full object-cover ring-2 ring-white/30" />
+          <div class="hidden md:block">
+            <p class="font-semibold">Alex Chen</p>
+            <p class="text-xs text-accent">Online</p>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="pt-32 pb-24 px-6 container mx-auto max-w-7xl">
+    <!-- WELCOME + BADGES + STREAK -->
+    <section class="welcome-section text-center py-16">
+      <h1 class="welcome-text text-4xl md:text-5xl font-bold text-primary opacity-0 -translate-x-40">Welcome back, Alex!</h1>
+
+      <!-- BADGES EARNED -->
+      <div class="badges-earned mt-12 bg-gradient-to-r from-primary to-accent text-white p-8 rounded-3xl shadow-xl">
+        <h3 class="text-xl font-bold mb-6 flex items-center justify-center gap-2">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2l3.09 6.26L20 9.27l-5 4.87 1.18 6.88L10 17.77l-6.18 3.25L5 14.14l-5-4.87 6.91-1.01L10 2z"/>
+          </svg>
+          Badges Earned
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Pitch Delivery -->
+          <div class="badge-item bg-white/20 backdrop-blur-sm rounded-2xl p-5 text-center">
+            <svg class="icon-mic mx-auto mb-3 text-white" viewBox="0 0 24 24">
+              <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3s-3 1.34-3 3v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5z"/>
+              <path d="M19 11c0 3.87-3.13 7-7 7s-7-3.13-7-7h2c0 2.76 2.24 5 5 5s5-2.24 5-5h2z"/>
+            </svg>
+            <p class="font-bold">Pitch Delivery</p>
+            <p class="text-sm opacity-90">Mastered presentation skills</p>
+          </div>
+
+          <!-- Strategic Communication -->
+          <div class="badge-item bg-white/20 backdrop-blur-sm rounded-2xl p-5 text-center">
+            <svg class="icon-chat mx-auto mb-3 text-white" viewBox="0 0 24 24">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 4H6v-2h8v2zm4-6H6V5h12v2z"/>
+            </svg>
+            <p class="font-bold">Strategic Communication</p>
+            <p class="text-sm opacity-90">Effective business communication</p>
+          </div>
+
+          <!-- Data Interpretation -->
+          <div class="badge-item bg-white/20 backdrop-blur-sm rounded-2xl p-5 text-center">
+            <svg class="icon-chart mx-auto mb-3 text-white" viewBox="0 0 24 24">
+              <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h12v-2H7v2zm0 4h12v-2H7v2zM7 7v2h12V7H7z"/>
+            </svg>
+            <p class="font-bold">Data Interpretation</p>
+            <p class="text-sm opacity-90">Analytical thinking expertise</p>
+          </div>
+        </div>
+
+        <!-- DAILY STREAK -->
+        <div class="streak-container mt-10 bg-white/10 backdrop-blur-sm rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <svg class="icon-fire w-8 h-8 text-streak" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M13.5 2c-.4 0-.7.1-.9.3-.3.3-.4.6-.3 1 .4 1.4 1.5 2.7 2.7 3.8 1.2 1.1 2.5 2.2 3.3 3.5.8 1.3.9 2.7.5 4-.4 1.3-1.4 2.4-2.5 2.9-.6.3-1.2.4-1.8.4-1.1 0-2-.5-2.7-1.2-.7-.7-1.2-1.6-1.4-2.6-.1-.5-.1-1-.1-1.5 0-1.1.3-2.1.9-3 .6-.9 1.5-1.6 2.5-2 .4-.1.6-.5.6-.9 0-.8-.7-1.5-1.5-1.5-.4 0-.8.2-1 .5-.2.3-.3.7-.2 1.1.3 1.1.2 2.2-.3 3.2-.5 1-1.2 1.8-2.1 2.5-.9.7-1.9 1.2-3 1.4-1.1.2-2.2 0-3.2-.6-1-.6-1.8-1.5-2.3-2.5-.5-1-.7-2.1-.5-3.2.1-1.1.6-2.1 1.3-2.9.7-.8 1.6-1.4 2.6-1.7.4-.1.7-.5.7-.9 0-.8-.7-1.5-1.5-1.5z"/>
+              </svg>
+              <span class="font-bold text-lg">Daily Streak</span>
+            </div>
+            <span class="font-bold text-2xl">12 Days</span>
+          </div>
+          <div class="relative h-4 bg-streak-bg rounded-full overflow-hidden">
+            <div class="streak-fill absolute left-0 top-0 h-full bg-streak rounded-full" style="width: 0%"></div>
+          </div>
+          <p class="text-sm mt-2 text-right opacity-90">4 days to next milestone</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFILE + CAREER PATH -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+      <div class="bg-light-bg rounded-2xl p-7 border border-border shadow-md flex items-center gap-5" id="profile-card">
+        <img src="https://i.pravatar.cc/150?u=alexchen" alt="Alex Chen" class="w-20 h-20 rounded-full object-cover" />
+        <div>
+          <p class="font-bold text-lg text-text-dark">Alex Chen</p>
+          <p class="text-sm text-text-muted">Stanford University</p>
+          <p class="text-sm text-text-muted">Computer Science • ID: 203456</p>
+        </div>
+      </div>
+      <div class="bg-light-bg rounded-2xl p-7 border border-border shadow-md">
+        <p class="text-sm text-text-muted">Selected Path</p>
+        <p class="text-xl font-bold text-primary mt-2">
+          <span class="typewriter inline-block overflow-hidden whitespace-nowrap border-r-2 border-primary">Investment Banking Analyst</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- ACTIVE SIMULATIONS -->
+    <section class="mb-14">
+      <h2 class="text-3xl font-bold text-primary mb-8">Active Simulations</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Simulation 1 -->
+        <div class="simulation-card bg-white rounded-2xl border border-border shadow-md overflow-hidden opacity-0" style="transform: rotateY(-90deg);">
+          <img src="https://picsum.photos/400/220?random=1" alt="M&A" class="w-full h-48 object-cover opacity-0" />
+          <div class="p-6">
+            <h3 class="font-bold text-xl text-text-dark">M&A Deal Simulation</h3>
+            <p class="text-sm text-text-muted mt-1">FINC 401 – Corporate Finance</p>
+            <p class="text-sm text-highlight mt-3 font-medium">Due: Tomorrow, 11:59 PM</p>
+            <div class="mt-4 h-3 bg-border rounded-full overflow-hidden">
+              <div class="progress-bar" style="--progress: 68%"></div>
+            </div>
+            <button class="continue-btn mt-5 w-full bg-accent hover:bg-primary text-white py-3 rounded-xl font-semibold transition">Continue</button>
+          </div>
+        </div>
+        <!-- Simulation 2 -->
+        <div class="simulation-card bg-white rounded-2xl border border-border shadow-md overflow-hidden opacity-0" style="transform: rotateY(-90deg);">
+          <img src="https://picsum.photos/400/220?random=2" alt="Case" class="w-full h-48 object-cover opacity-0" />
+          <div class="p-6">
+            <h3 class="font-bold text-xl text-text-dark">Strategy Case Crack</h3>
+            <p class="text-sm text-text-muted mt-1">MGMT 301 – Strategy</p>
+            <p class="text-sm text-text-muted mt-3">Due: In 3 days</p>
+            <div class="mt-4 h-3 bg-border rounded-full overflow-hidden">
+              <div class="progress-bar" style="--progress: 42%"></div>
+            </div>
+            <button class="continue-btn mt-5 w-full bg-accent hover:bg-primary text-white py-3 rounded-xl font-semibold transition">Continue</button>
+          </div>
+        </div>
+        <!-- Simulation 3 -->
+        <div class="simulation-card bg-white rounded-2xl border border-border shadow-md overflow-hidden opacity-0" style="transform: rotateY(-90deg);">
+          <img src="https://picsum.photos/400/220?random=3" alt="SQL" class="w-full h-48 object-cover opacity-0" />
+          <div class="p-6">
+            <h3 class="font-bold text-xl text-text-dark">SQL Dashboard Build</h3>
+            <p class="text-sm text-text-muted mt-1">DATA 201 – Analytics</p>
+            <p class="text-sm text-text-muted mt-3">Due: Next week</p>
+            <div class="mt-4 h-3 bg-border rounded-full overflow-hidden">
+              <div class="progress-bar" style="--progress: 90%"></div>
+            </div>
+            <button class="continue-btn mt-5 w-full bg-accent hover:bg-primary text-white py-3 rounded-xl font-semibold transition">Continue</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ASSIGNMENTS -->
+    <section>
+      <h2 class="text-3xl font-bold text-primary mb-8">Assignments</h2>
+      <div class="space-y-5">
+        <div class="assignment-row bg-white rounded-xl border border-border p-6 cursor-pointer transition-all" data-expanded="false">
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="font-semibold text-lg text-text-dark">Pitch Deck Submission</p>
+              <p class="text-sm text-text-muted">Due: <span class="text-highlight font-medium">Tomorrow</span></p>
+            </div>
+            <svg class="w-6 h-6 text-text-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+          <div class="assignment-details mt-5 hidden overflow-hidden">
+            <p class="text-sm text-text-muted">Submit your final pitch deck for the M&A simulation. Max 10 slides.</p>
+            <div class="mt-4 inline-block bg-success text-white px-4 py-1.5 rounded-full text-sm font-bold">A+</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MOBILE STICKY -->
+  <div id="mobile-sticky" class="sticky-bar fixed bottom-0 left-0 right-0 bg-primary text-white p-4 flex justify-around items-center shadow-2xl md:hidden z-40 overflow-x-auto snap-x">
+    <div class="text-center snap-center min-w-[5rem]">
+      <div class="w-12 h-12 mx-auto bg-accent/30 rounded-xl flex items-center justify-center">
+        <span class="text-xs font-bold">M&A</span>
+      </div>
+      <p class="text-xs mt-1 font-medium">M&A</p>
+    </div>
+    <div class="text-center snap-center min-w-[5rem]">
+      <div class="w-12 h-12 mx-auto bg-accent/30 rounded-xl flex items-center justify-center">
+        <span class="text-xs font-bold">CS</span>
+      </div>
+      <p class="text-xs mt-1 font-medium">Case</p>
+    </div>
+    <div class="text-center snap-center min-w-[5rem]">
+      <div class="w-12 h-12 mx-auto bg-accent/30 rounded-xl flex items-center justify-center">
+        <span class="text-xs font-bold">SQL</span>
+      </div>
+      <p class="text-xs mt-1 font-medium">SQL</p>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/script.js"></script>
+</body>
+</html>
