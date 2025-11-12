@@ -53,8 +53,7 @@ These prompts helped us to ensure visual consistency and increase the attractive
 #### **Prompt 3**  
 **Prompt:**  
 > “By referencing the screenshot file attached,please create prompts that lay out creative and eye-catching animation details to be incorporated into the page, which will then be used for creating codes to generate the page.
-
-”  
+  
 
 **Response Summary:**  
 Grok created a prompt that gives clear instructions on the animations of website.
